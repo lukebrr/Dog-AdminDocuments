@@ -1,1 +1,1 @@
-web: python DocAdministration.py
+web: python docadminservice.py
