@@ -37,12 +37,12 @@ def init_db():
 # [C]rud: Add a new document entry, return the document id
 def new_doco(doco):
     # If document id already exists in the system then raise an error
-    doco_exists = db.doco_details.find_one({'doc_id': doco['doc_id']})
+##    doco_exists = db.doco_details.find_one({'id': doco['id']})
 
-    if not doco_exists:
+##    if not doco_exists:
         # Add doco to database
-        _id = db.doco_details.insert_one({'doc_id': doco['doc_id'],
-                                    'doco_type': doco['doco_type'],
+##        _id = db.doco_details.insert_one({'doc_id': doco['doc_id'],
+        _id = db.doco_details.insert_one({'doco_type': doco['doco_type'],
                                     'name': doco['name'],
                                     'status': doco['status'],
                                     'handler_id': doco['handler_id'],
@@ -57,7 +57,6 @@ def get_doco(d_id):
     if doco_rec:
         doco = {
             'id': d_id,
-            'doc_id': doco_rec.get('doc_id'),
             'doco_type': doco_rec.get('doco_type'),
             'name':doco_rec.get('name'),
             'status': doco_rec.get('status'),
@@ -75,7 +74,6 @@ def get_documents(max_number = 10):
     for doco in db.doco_details.find().sort("name", 1).limit(max_number):
         doco = {
             'id': str(doco.get('_id')),
-            'doc_id': doco.get('doc_id'),
             'doco_type': doco.get('doco_type'),
             'name': doco.get('name'),
             'status': doco.get('status'),
@@ -90,8 +88,7 @@ def get_documents(max_number = 10):
 def update_doco(doco):
     # Update document fields if present
     db.doco_details.update_one({'_id': ObjectId(doco['id'])},
-                    { "$set" :{ 'doc_id': doco['doc_id'],
-                                'doco_type': doco['doco_type'],
+                    { "$set" :{ 'doco_type': doco['doco_type'],
                                 'name': doco['name'],
                                 'status': doco['status'],
                                 'handler_id': doco['handler_id'],
@@ -111,7 +108,6 @@ def search(criteria):
     for doco in db.doco_details.find(criteria):
         doco = {
             'id': str(doco.get('_id')),
-            'doc_id': doco.get('doc_id'),
             'doco_type': doco.get('doco_type'),
             'name': doco.get('name'),
             'status': doco.get('status'),

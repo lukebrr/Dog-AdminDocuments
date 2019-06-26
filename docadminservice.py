@@ -37,14 +37,13 @@ def get_doco(d_id):
 def create_doco():
     # Check for JSON input, plus:
     # Mandatory document name, doc_id must be unique
-    if not request.json or not 'name' in request.json:
-        abort(400)
+##    if not request.json or not 'name' in request.json:
+##        abort(400)
     doco = {
-        'doc_id': str(request.json['doc_id']).strip().lower(),
         'doco_type': str(request.json['doco_type']).strip().upper(),
-        'name': str(request.json['name']).strip().capitalize(),
-        'status': request.json.get('status', "").strip().upper(),
-        'handler_id': request.json.get('handler_id', None).strip().lower(),
+        'name': '',
+        'status': 'UPLOADED',
+        'handler_id': str(request.json.get('handler_id', None)).strip().lower(),
         'dog_id': str(request.json.get('dog_id', "")).strip().lower()
     }
     id = models.new_doco(doco)
@@ -64,16 +63,13 @@ def update_doco(d_id):
         abort(400)
     if 'status' in request.json and type(request.json['status']) is not unicode:
         abort(400)
-    if 'doc_id' in request.json and type(request.json['doc_id']) is not unicode:
-        abort(400)
     if 'doco_type' in request.json and type(request.json['doco_type']) is not unicode:
         abort(400)
     if 'handler_id' in request.json and type(request.json['handler_id']) is not unicode:
         abort(400)
     if 'dog_id' in request.json and type(request.json['dog_id']) is not unicode:
         abort(400)
-    doco['name'] = str(request.json.get('name', doco['name'])).strip().capitalize()
-    doco['doc_id'] = str(request.json.get('doc_id', doco['doc_id'])).strip().lower()
+    doco['name'] = str(request.json.get('name', doco['name'])).strip().lower()
     doco['doco_type'] = str(request.json.get('doco_type', doco['doco_type'])).strip().upper()
     doco['status'] = str(request.json.get('status', doco['status'])).strip().upper()
     doco['handler_id'] = str(request.json.get('handler_id', doco['handler_id'])).strip().lower()
@@ -100,16 +96,12 @@ def search():
 
     criteria = {}
 
-    if 'doc_id' in request.json:
-        doc_id = str(request.json['doc_id']).strip().lower()
-        criteria['doc_id'] = doc_id
-
     if 'doco_type' in request.json:
         doco_type = str(request.json['doco_type']).strip().upper()
         criteria['doco_type'] = doco_type
 
     if 'name' in request.json:
-        name = str(request.json['name']).strip().capitalize()
+        name = str(request.json['name']).strip().lower()
         criteria['name'] = name
 
     if 'handler_id' in request.json:
@@ -134,4 +126,4 @@ def search():
 # Initialise DB before starting web service
 models.init_db()
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', '5040')), threaded=True)
+    app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', '5140')), threaded=True)
