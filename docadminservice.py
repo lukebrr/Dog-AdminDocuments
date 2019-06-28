@@ -100,10 +100,6 @@ def search():
         doco_type = str(request.json['doco_type']).strip().upper()
         criteria['doco_type'] = doco_type
 
-    if 'name' in request.json:
-        name = str(request.json['name']).strip().lower()
-        criteria['name'] = name
-
     if 'handler_id' in request.json:
         handler_id = request.json['handler_id']
         if not (handler_id is None):
