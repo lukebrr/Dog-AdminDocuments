@@ -25,6 +25,7 @@ def db_conn():
 
     # Otherwise, assume running locally with local MongoDB instance
     else:
+##	    DB_ENDPOINT = MongoClient('127.0.0.1:27017')
 	    DB_ENDPOINT = MongoClient('192.168.26.130:27017')
 	    DB_NAME = "DocoAdmin"
     # Get database connection using database endpoint and name defined above
@@ -71,16 +72,16 @@ def get_doco(d_id):
 def get_documents(max_number = 10):
     documents = []
 
-    for doco in db.doco_details.find().sort("name", 1).limit(max_number):
+    for doc in db.doco_details.find().sort("name", 1).limit(max_number):
         doco = {
-            'id': str(doco.get('_id')),
-            'doco_type': doco.get('doco_type'),
-            'name': doco.get('name'),
-            'status': doco.get('status'),
-            'handler_id': doco.get('handler_id'),
-            'dog_id': doco.get('dog_id')
+            'id': str(doc.get('_id')),
+            'doco_type': doc.get('doco_type'),
+            'name': doc.get('name'),
+            'status': doc.get('status'),
+            'handler_id': doc.get('handler_id'),
+            'dog_id': doc.get('dog_id')
         }
-        documents.append(doco)
+        documents.append(doc)
 
     return documents
 
@@ -101,18 +102,35 @@ def update_doco(doco):
 ##def delete_doco(doc_id):
 ##    db.doco_details.delete_one({'_id': ObjectId(doc_id)})
 
+# Retrieve a document by id
+def get_document(d_id):
+    doc = db.doco_details.find_one({'_id': ObjectId(d_id)})
+    # Check if document exists
+    if doc:
+        doco = {
+            'id': str(doc.get('_id')),
+            'doco_type': doc.get('doco_type'),
+            'name': doc.get('name'),
+            'status': doc.get('status'),
+            'handler_id': doc.get('handler_id'),
+            'dog_id': doc.get('dog_id') 
+        }
+        return doc
+    else:
+        return None
+
 # Generic search by criteria (dictionary of fields)
 def search(criteria):
     documents = []
 
-    for doco in db.doco_details.find(criteria):
+    for doc in db.doco_details.find(criteria):
         doco = {
-            'id': str(doco.get('_id')),
-            'doco_type': doco.get('doco_type'),
-            'name': doco.get('name'),
-            'status': doco.get('status'),
-            'handler_id': doco.get('handler_id'),
-            'dog_id': doco.get('dog_id')   
+            'id': str(doc.get('_id')),
+            'doco_type': doc.get('doco_type'),
+            'name': doc.get('name'),
+            'status': doc.get('status'),
+            'handler_id': doc.get('handler_id'),
+            'dog_id': doc.get('dog_id')   
         }
         documents.append(doco)
     

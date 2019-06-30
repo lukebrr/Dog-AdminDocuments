@@ -40,7 +40,7 @@ def create_doco():
 ##    if not request.json or not 'name' in request.json:
 ##        abort(400)
     doco = {
-        'doco_type': str(request.json['doco_type']).strip().upper(),
+        'doco_type': str(request.json['doco_type']).strip().lower(),
         'name': '',
         'status': 'UPLOADED',
         'handler_id': str(request.json.get('handler_id', None)).strip().lower(),
@@ -70,8 +70,8 @@ def update_doco(d_id):
     if 'dog_id' in request.json and type(request.json['dog_id']) is not unicode:
         abort(400)
     doco['name'] = str(request.json.get('name', doco['name'])).strip().lower()
-    doco['doco_type'] = str(request.json.get('doco_type', doco['doco_type'])).strip().upper()
-    doco['status'] = str(request.json.get('status', doco['status'])).strip().upper()
+    doco['doco_type'] = str(request.json.get('doco_type', doco['doco_type'])).strip().lower()
+    doco['status'] = str(request.json.get('status', doco['status'])).strip().lower()
     doco['handler_id'] = str(request.json.get('handler_id', doco['handler_id'])).strip().lower()
     doco['dog_id'] = str(request.json.get('dog_id', doco['dog_id'])).strip().lower()
     models.update_doco(doco)
@@ -87,7 +87,7 @@ def update_doco(d_id):
 ##    models.delete_doco(d_id)
 ##    return jsonify( { 'result': True } )
 
-# Service Call for search by criteria (similar to Update Handler method)
+# Service Call for search by criteria (similar to Update method)
 # Accepts a single field or multiple fields which are then AND'ed
 @app.route('/api/v1.0/search', methods = ['PUT'])
 def search():
@@ -97,7 +97,7 @@ def search():
     criteria = {}
 
     if 'doco_type' in request.json:
-        doco_type = str(request.json['doco_type']).strip().upper()
+        doco_type = str(request.json['doco_type']).strip().lower()
         criteria['doco_type'] = doco_type
 
     if 'handler_id' in request.json:
@@ -113,7 +113,7 @@ def search():
         criteria['dog_id'] = dog_id
         
     if 'status' in request.json:
-        status = str(request.json['status']).strip().upper()
+        status = str(request.json['status']).strip().lower()
         criteria['status'] = status        
 
     documents = models.search(criteria)
