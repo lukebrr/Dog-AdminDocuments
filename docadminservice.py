@@ -42,7 +42,7 @@ def create_doco():
     doco = {
         'doco_type': str(request.json['doco_type']).strip().lower(),
         'name': '',
-        'status': 'UPLOADED',
+        'status': 'uploaded',
         'handler_id': str(request.json.get('handler_id', None)).strip().lower(),
         'dog_id': str(request.json.get('dog_id', "")).strip().lower()
     }
@@ -59,21 +59,21 @@ def update_doco(doco_id):
         abort(404)
     if not request.json:
         abort(400)
-    if 'name' in request.json and type(request.json['name']) is not unicode:
-        abort(400)
+##    if 'name' in request.json and type(request.json['name']) is not unicode:
+##        abort(400)
     if 'status' in request.json and type(request.json['status']) is not unicode:
         abort(400)
-    if 'doco_type' in request.json and type(request.json['doco_type']) is not unicode:
-        abort(400)
+##    if 'doco_type' in request.json and type(request.json['doco_type']) is not unicode:
+##        abort(400)
     if 'handler_id' in request.json and type(request.json['handler_id']) is not unicode:
         abort(400)
-    if 'dog_id' in request.json and type(request.json['dog_id']) is not unicode:
-        abort(400)
-    doco['name'] = str(request.json.get('name', doco['name'])).strip().lower()
-    doco['doco_type'] = str(request.json.get('doco_type', doco['doco_type'])).strip().lower()
+##    if 'dog_id' in request.json and type(request.json['dog_id']) is not unicode:
+##        abort(400)
+##    doco['name'] = str(request.json.get('name', doco['name'])).strip().lower()
+##    doco['doco_type'] = str(request.json.get('doco_type', doco['doco_type'])).strip().lower()
     doco['status'] = str(request.json.get('status', doco['status'])).strip().lower()
     doco['handler_id'] = str(request.json.get('handler_id', doco['handler_id'])).strip().lower()
-    doco['dog_id'] = str(request.json.get('dog_id', doco['dog_id'])).strip().lower()
+##    doco['dog_id'] = str(request.json.get('dog_id', doco['dog_id'])).strip().lower()
     models.update_doco(doco)
 
     return jsonify( { 'doco': doco } )

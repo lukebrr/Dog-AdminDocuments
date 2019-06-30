@@ -37,19 +37,20 @@ def init_db():
 
 # [C]rud: Add a new document entry, return the document id
 def new_doco(doco):
+    
     # If document id already exists in the system then raise an error
 ##    doco_exists = db.doco_details.find_one({'id': doco['id']})
 
 ##    if not doco_exists:
         # Add doco to database
 ##        _id = db.doco_details.insert_one({'doc_id': doco['doc_id'],
-        _id = db.doco_details.insert_one({'doco_type': doco['doco_type'],
+    _id = db.doco_details.insert_one({'doco_type': doco['doco_type'],
                                     'name': doco['name'],
                                     'status': doco['status'],
                                     'handler_id': doco['handler_id'],
                                     'dog_id': doco['dog_id'] })
                                     
-	return str(_id.inserted_id)
+    return str(_id.inserted_id)
 
 # c[R]ud: Retrieve a doocument by id
 def get_doco(doco_id):
@@ -89,11 +90,12 @@ def get_documents(max_number = 10):
 def update_doco(doco):
     # Update document fields if present
     db.doco_details.update_one({'_id': ObjectId(doco['id'])},
-                    { "$set" :{ 'doco_type': doco['doco_type'],
-                                'name': doco['name'],
+                    { "$set" :{ 'handler_id': doco['handler_id'],
+##                                'dog_id': doco['dog_id'],
+##                                'doco_type': doco['doco_type'],
+##                                'name': doco['name'],
                                 'status': doco['status'],
-                                'handler_id': doco['handler_id'],
-                                'dog_id': doco['dog_id'] }
+                                }
                     },
                     upsert=True)
     return
