@@ -22,9 +22,9 @@ def get_documents():
     return jsonify( { 'documents': documents } ), 201
 
 # Service Call for retrieving a single document's details using mongo unique index id
-@app.route('/api/v1.0/doco/<string:d_id>', methods = ['GET'])
-def get_doco(d_id):
-    doco = models.get_doco(d_id)
+@app.route('/api/v1.0/doco/<string:doco_id>', methods = ['GET'])
+def get_doco(doco_id):
+    doco = models.get_doco(doco_id)
 
     if not doco:
         # No dog with that id found
@@ -52,9 +52,9 @@ def create_doco():
     return jsonify( { 'doco': doco } ), 201
 
 # Service Call for updating a document
-@app.route('/api/v1.0/doco/<string:d_id>', methods = ['PUT'])
-def update_doco(d_id):
-    doco = models.get_doco(d_id)
+@app.route('/api/v1.0/doco/<string:doco_id>', methods = ['PUT'])
+def update_doco(doco_id):
+    doco = models.get_doco(doco_id)
     if len(doco) == 0:
         abort(404)
     if not request.json:
@@ -79,12 +79,12 @@ def update_doco(d_id):
     return jsonify( { 'doco': doco } )
 
 ### Service Call for deleting a document
-##@app.route('/api/v1.0/doco/<string:d_id>', methods = ['DELETE'])
-##def delete_doco(d_id):
-##    doco = models.get_doco(d_id)
+##@app.route('/api/v1.0/doco/<string:doco_id>', methods = ['DELETE'])
+##def delete_doco(doco_id):
+##    doco = models.get_doco(doco_id)
 ##    if doco is None:
 ##        abort(404)
-##    models.delete_doco(d_id)
+##    models.delete_doco(doco_id)
 ##    return jsonify( { 'result': True } )
 
 # Service Call for search by criteria (similar to Update method)

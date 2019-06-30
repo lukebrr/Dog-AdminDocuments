@@ -52,12 +52,12 @@ def new_doco(doco):
 	return str(_id.inserted_id)
 
 # c[R]ud: Retrieve a doocument by id
-def get_doco(d_id):
-    doco_rec = db.doco_details.find_one({'_id': ObjectId(d_id)})
+def get_doco(doco_id):
+    doco_rec = db.doco_details.find_one({'_id': ObjectId(doco_id)})
     # Check if document exists
     if doco_rec:
         doco = {
-            'id': d_id,
+            'id': doco_id,
             'doco_type': doco_rec.get('doco_type'),
             'name':doco_rec.get('name'),
             'status': doco_rec.get('status'),
@@ -103,8 +103,8 @@ def update_doco(doco):
 ##    db.doco_details.delete_one({'_id': ObjectId(doc_id)})
 
 # Retrieve a document by id
-def get_document(d_id):
-    doc = db.doco_details.find_one({'_id': ObjectId(d_id)})
+def get_document(doco_id):
+    doc = db.doco_details.find_one({'_id': ObjectId(doco_id)})
     # Check if document exists
     if doc:
         doco = {
